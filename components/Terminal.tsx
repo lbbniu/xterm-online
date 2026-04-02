@@ -111,14 +111,25 @@ export default function TerminalComponent() {
   return (
     <>
       {/* Header */}
-      <header className="bg-[#1a1a1a] border-b border-[#333] p-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3" />
-            </svg>
-            Web Terminal
-          </h1>
+      <header className="bg-[var(--bg-secondary)] border-b border-[var(--border-default)] p-3 sm:p-4 shrink-0">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Logo Icon - 固定尺寸防止异常放大 */}
+            <div className="w-8 h-8 flex items-center justify-center bg-[var(--accent-green)]/10 rounded-lg shrink-0">
+              <svg 
+                className="w-5 h-5 text-[var(--accent-green)]" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ width: '20px', height: '20px', minWidth: '20px', minHeight: '20px' }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3" />
+              </svg>
+            </div>
+            <h1 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] whitespace-nowrap">
+              XTerm Online
+            </h1>
+          </div>
           
           <div className="flex-1 flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <input
@@ -163,10 +174,10 @@ export default function TerminalComponent() {
       </header>
 
       {/* Terminal Container */}
-      <main className="flex-1 p-4">
-        <div className="max-w-7xl mx-auto h-[calc(100vh-140px)]">
-          <div className="bg-[#1a1a1a] rounded-lg border border-[#333] h-full overflow-hidden">
-            <div ref={terminalRef} className="h-full w-full p-2" />
+      <main className="flex-1 p-2 sm:p-4 overflow-hidden">
+        <div className="max-w-7xl mx-auto h-full">
+          <div className="terminal-container h-full">
+            <div ref={terminalRef} className="h-full w-full" />
           </div>
         </div>
       </main>
