@@ -153,66 +153,99 @@ export default function TerminalComponent() {
         strategy="afterInteractive"
       />
 
-      {/* Header with AdSense */}
-      <header className="bg-[var(--bg-secondary)] border-b border-[var(--border-default)] p-3 sm:p-4 shrink-0">
-        <div className="max-w-7xl mx-auto">
-          {/* Top Ad Banner */}
-          <div className="mb-4 hidden sm:block">
-            <GoogleAdSense adSlot="1234567890" style={{ height: "90px" }} />
-          </div>
-
-          <div className="flex flex-col lg:flex-row items-stretch gap-4">
-            {/* Logo */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-[var(--accent-cyan)]/20 to-[var(--accent-green)]/20 rounded-xl border border-[var(--accent-cyan)]/30">
-                <svg className="w-6 h-6 text-[var(--accent-cyan)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3" />
-                </svg>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col">
+        
+        {/* Modern Header */}
+        <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-white">XTerm Online</h1>
+                  <p className="text-xs text-slate-400">Modern Web Terminal</p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-[var(--text-primary)]">XTerm Online</h1>
-                <p className="text-xs text-[var(--text-muted)]">Professional Web Terminal</p>
+
+              {/* Connection Status Badge */}
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
+                isConnected 
+                  ? 'bg-green-500/10 text-green-400 border border-green-500/30' 
+                  : connectionStatus === "Connecting..."
+                  ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/30'
+                  : 'bg-red-500/10 text-red-400 border border-red-500/30'
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${
+                  isConnected 
+                    ? 'bg-green-400 animate-pulse' 
+                    : connectionStatus === "Connecting..."
+                    ? 'bg-yellow-400 animate-bounce'
+                    : 'bg-red-400'
+                }`}></span>
+                <span className="hidden sm:inline">{connectionStatus}</span>
               </div>
             </div>
+          </div>
+        </header>
 
-            {/* Connection Panel - Tech Style */}
-            <div className="flex-1 glass-panel rounded-xl p-1 border border-[var(--border-default)]">
-              <div className="flex flex-col sm:flex-row gap-2">
-                {/* URL Input - Large & Tech */}
-                <div className="flex-1 relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-cyan)]/10 to-[var(--accent-green)]/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur"></div>
-                  <div className="relative flex items-center bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border-default)] group-hover:border-[var(--accent-cyan)]/50 transition-all duration-300 focus-within:border-[var(--accent-cyan)] focus-within:shadow-[0_0_20px_rgba(0,212,255,0.2)] h-12">
-                    <span className="pl-4 pr-2 text-[var(--accent-cyan)] font-mono text-sm font-bold">WS://</span>
+        {/* Top Ad Banner */}
+        <div className="bg-slate-900/50 border-b border-slate-700/30">
+          <div className="max-w-7xl mx-auto px-4 py-2">
+            <div className="hidden sm:flex justify-center">
+              <GoogleAdSense adSlot="1234567890" style={{ height: "90px", width: "728px" }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+          <div className="flex flex-col lg:flex-row gap-6 h-full">
+            
+            {/* Left Column - Terminal */}
+            <div className="flex-1 flex flex-col gap-4">
+              
+              {/* Connection Panel */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-4 shadow-xl">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  
+                  {/* URL Input */}
+                  <div className="flex-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <span className="text-slate-500 font-mono text-sm">ws://</span>
+                    </div>
                     <input
                       type="text"
                       value={wsUrl}
                       onChange={(e) => setWsUrl(e.target.value)}
                       placeholder="localhost:8080"
                       disabled={isConnected}
-                      className="flex-1 bg-transparent border-0 px-2 py-3 text-[var(--text-primary)] font-mono text-base placeholder-[var(--text-muted)] focus:outline-none disabled:opacity-50"
+                      className="w-full pl-14 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all font-mono text-sm disabled:opacity-50"
                     />
+                    
                     {isConnected && (
-                      <span className="pr-4 text-[var(--accent-green)]">
-                        <span className="w-2 h-2 bg-[var(--accent-green)] rounded-full animate-pulse inline-block"></span>
-                      </span>
+                      <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
+                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                      </div>
                     )}
                   </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2 shrink-0">
-                  <button
-                    onClick={isConnected ? disconnect : connect}
-                    className={`
-                      relative overflow-hidden px-6 h-12 rounded-lg font-semibold text-sm uppercase tracking-wider
-                      transition-all duration-300 transform hover:scale-105 active:scale-95
-                      ${isConnected 
-                        ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white shadow-lg shadow-red-500/30' 
-                        : 'bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-green)] text-[var(--bg-primary)] shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50'
-                      }
-                    `}
-                  >
-                    <span className="relative flex items-center gap-2">
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={isConnected ? disconnect : connect}
+                      className={`
+                        px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200
+                        flex items-center gap-2 min-w-[100px] justify-center
+                        ${isConnected 
+                          ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/25' 
+                          : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40'
+                        }
+                      `}
+                    >
                       {isConnected ? (
                         <>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,70 +261,64 @@ export default function TerminalComponent() {
                           连接
                         </>
                       )}
-                    </span>
-                  </button>
+                    </button>
 
-                  <button
-                    onClick={clearTerminal}
-                    className="px-4 h-12 rounded-lg font-medium text-sm border border-[var(--border-default)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:border-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-all duration-300 flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                    清屏
-                  </button>
+                    <button
+                      onClick={clearTerminal}
+                      className="px-4 py-3 rounded-xl font-medium text-sm bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-2 border border-slate-600 hover:border-slate-500"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      清屏
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Status Bar */}
-              <div className="mt-2 flex items-center gap-3 px-2">
-                <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono ${
-                  isConnected 
-                    ? 'bg-[var(--accent-green)]/10 text-[var(--accent-green)] border border-[var(--accent-green)]/30' 
-                    : connectionStatus === "Connecting..."
-                    ? 'bg-[var(--accent-yellow)]/10 text-[var(--accent-yellow)] border border-[var(--accent-yellow)]/30'
-                    : 'bg-[var(--accent-red)]/10 text-[var(--accent-red)] border border-[var(--accent-red)]/30'
-                }`}>
-                  <span className={`w-2 h-2 rounded-full ${
-                    isConnected 
-                      ? 'bg-[var(--accent-green)] animate-pulse' 
-                      : connectionStatus === "Connecting..."
-                      ? 'bg-[var(--accent-yellow)] animate-blink'
-                      : 'bg-[var(--accent-red)]'
-                  }`}></span>
-                  <span>{connectionStatus}</span>
-                </div>
-                
-                <span className="text-[var(--text-muted)]">|</span>
-                <span className="text-[var(--text-secondary)] font-mono text-xs">WebSocket Protocol</span>
+              {/* Terminal */}
+              <div className="flex-1 bg-slate-900 rounded-2xl border border-slate-700/50 shadow-2xl overflow-hidden min-h-[400px]">
+                <div ref={terminalRef} className="h-full w-full p-4" />
+              </div>
+            </div>
+
+            {/* Right Column - Ad & Info */}
+            <div className="w-full lg:w-[300px] flex flex-col gap-4">
+              
+              {/* Sidebar Ad */}
+              <div className="bg-slate-800/30 rounded-2xl border border-slate-700/30 p-4 hidden lg:block">
+                <GoogleAdSense adSlot="2345678901" style={{ width: "100%", height: "600px" }} />
+              </div>
+
+              {/* Quick Info */}
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-4">
+                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  使用说明
+                </h3>
+                <ul className="text-sm text-slate-400 space-y-2">
+                  <li>• 输入 WebSocket 地址连接</li>
+                  <li>• 支持 ws:// 和 wss:// 协议</li>
+                  <li>• 按键自动发送到服务器</li>
+                  <li>• 支持全屏终端体验</li>
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </main>
 
-      {/* Terminal Container */}
-      <main className="flex-1 p-2 sm:p-4 overflow-hidden">
-        <div className="max-w-7xl mx-auto h-full flex gap-4">
-          {/* Main Terminal */}
-          <div className="flex-1 terminal-container h-full">
-            <div ref={terminalRef} className="h-full w-full" />
+        {/* Footer */}
+        <footer className="bg-slate-900/80 backdrop-blur-md border-t border-slate-700/50">
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-slate-500">
+              <span>© 2026 XTerm Online. Powered by xterm.js</span>
+              <span className="font-mono">WebSocket Terminal</span>
+            </div>
           </div>
-
-          {/* Sidebar Ad */}
-          <div className="hidden lg:block w-[300px] shrink-0">
-            <GoogleAdSense adSlot="2345678901" style={{ width: "300px", height: "600px" }} />
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-[var(--bg-secondary)] border-t border-[var(--border-default)] p-3">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[var(--text-muted)]">
-          <span>XTerm Online © 2026 • Professional Web Terminal powered by xterm.js</span>
-          <span className="font-mono">Press any key to send to WebSocket</span>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </>
   );
 }
