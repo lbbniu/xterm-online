@@ -1,0 +1,33 @@
+# XTerm Online
+
+> XTerm Online is a professional web-based terminal using xterm.js with WebSocket support. Access remote servers securely from your browser with a modern, responsive interface.
+
+## Main Features
+
+- [Web Terminal](/): Professional web-based terminal emulator powered by xterm.js
+- [WebSocket Support](/): Real-time bidirectional communication with remote servers
+- [Cross-Platform](/): Works seamlessly on desktop, tablet, and mobile devices
+
+## Key Facts
+
+- Free to use, no sign-up required
+- Powered by xterm.js — the same terminal engine used in VS Code
+- Secure WebSocket connections with modern encryption
+- Responsive design optimized for all screen sizes
+- Open source and self-hostable
+
+## Technical Stack
+
+- Next.js 16 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- xterm.js 5.5
+
+## Use Cases
+
+- Remote server management via WebSocket
+- Browser-based SSH terminal
+- Cloud development environments
+- Online coding playgrounds
+- Terminal-based application demos

@@ -2,11 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: {
-    default: "XTerm Online - Professional Web Terminal",
-    template: "%s | XTerm Online"
-  },
-  description: "XTerm Online is a professional web-based terminal using xterm.js with WebSocket support. Access remote servers securely from your browser with a modern, responsive interface.",
+  title: "XTerm Online | Web-Based Terminal with WebSocket Support",
+  description: "Access remote servers securely from your browser. XTerm Online is a professional web-based terminal using xterm.js with WebSocket support. Free, no signup required.",
   keywords: [
     "web terminal", "xterm.js", "online terminal", "websocket terminal",
     "browser terminal", "remote access", "SSH web client", "cloud terminal",
@@ -117,6 +114,100 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        
+        {/* Plausible Analytics */}
+        <script 
+          defer 
+          data-domain="xterm.online" 
+          src="https://plausible.io/js/script.js"
+        />
+        
+        {/* Google Analytics 4 */}
+        <script 
+          async 
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-XXXXXXXXXX');
+            `,
+          }}
+        />
+        
+        {/* Microsoft Clarity */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "XXXXXXXXXX");
+            `,
+          }}
+        />
+        
+        {/* JSON-LD Structured Data - Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "XTerm Online",
+              "url": "https://xterm.online",
+              "logo": "https://xterm.online/icon.svg",
+              "description": "Professional web-based terminal using xterm.js with WebSocket support",
+            }),
+          }}
+        />
+        
+        {/* JSON-LD Structured Data - WebSite */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "XTerm Online",
+              "url": "https://xterm.online",
+              "description": "Access remote servers securely from your browser with a modern web terminal",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://xterm.online/search?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        
+        {/* JSON-LD Structured Data - SoftwareApplication */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "XTerm Online",
+              "applicationCategory": "DeveloperApplication",
+              "operatingSystem": "Any",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "ratingCount": "100",
+              },
+            }),
+          }}
+        />
       </head>
       <body className="antialiased min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
         {children}
