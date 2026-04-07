@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /.next/
-Disallow: /_next/
 
 Sitemap: https://xterm.online/sitemap.xml
-Host: https://xterm.online
