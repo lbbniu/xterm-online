@@ -15,7 +15,7 @@ interface WindowWithAds extends Window {
   adsbygoogle?: unknown[];
 }
 
-// Google AdSense Component
+// Google AdSense Component - Auto hides when no ad content
 function GoogleAdSense({ 
   adSlot, 
   style 
@@ -24,12 +24,20 @@ function GoogleAdSense({
   style?: React.CSSProperties 
 }) {
   const adRef = useRef<HTMLDivElement>(null);
+  const [hasAd, setHasAd] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined" && adRef.current) {
       try {
         const win = window as WindowWithAds;
         (win.adsbygoogle = win.adsbygoogle || []).push({});
+        // Check if ad loaded after a delay
+        setTimeout(() => {
+          if (adRef.current) {
+            const adContent = adRef.current.querySelector('iframe');
+            setHasAd(!!adContent && adContent.offsetHeight > 0);
+          }
+        }, 2000);
       } catch (e) {
         console.error("AdSense error:", e);
       }
@@ -37,7 +45,7 @@ function GoogleAdSense({
   }, []);
 
   return (
-    <div ref={adRef} style={style}>
+    <div ref={adRef} style={{...style, display: hasAd ? 'block' : 'none'}}>
       <ins
         className="adsbygoogle"
         style={{ display: "block", ...style }}
@@ -175,11 +183,11 @@ export default function TerminalComponent() {
         
         <Header isConnected={isConnected} connectionStatus={connectionStatus} />
 
-        {/* Top Ad Banner - Hidden on small screens */}
+        {/* Top Ad Banner - Hidden on small screens, auto height */}
         <div className="bg-slate-900/50 border-b border-slate-700/30 hidden sm:block">
           <div className="max-w-7xl mx-auto px-4 py-2">
-            <div className="flex justify-center">
-              <GoogleAdSense adSlot="1234567890" style={{ height: "90px", width: "728px" }} />
+            <div className="flex justify-center min-h-[90px]">
+              <GoogleAdSense adSlot="1234567890" style={{ minHeight: "90px", width: "728px" }} />
             </div>
           </div>
         </div>
@@ -215,7 +223,7 @@ export default function TerminalComponent() {
             {/* Right Column - Sidebar */}
             <Sidebar>
               <div className="bg-slate-800/30 rounded-2xl border border-slate-700/30 p-4">
-                <GoogleAdSense adSlot="2345678901" style={{ width: "100%", height: "600px" }} />
+                <GoogleAdSense adSlot="2345678901" style={{ width: "100%", minHeight: "600px" }} />
               </div>
             </Sidebar>
           </div>
